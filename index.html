@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Litter</title>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" type="text/css" href="theme.css">
   </head>
   <body>
+    
+    <div id=header>
+      <h1>Litter</h1>
+      <br/>
+      <h2>Live Twitter</h2>
+    </div>
+    
+    <div id=nav>
+      <ul><a href="">Tab 1</a></ul>
+      <ul><a href="">Tab 2</a></ul>
+      <ul><a href="">Tab 3</a></ul>
+    </div>
+    
+    <div id=tweets></div>
+    
+    <div id=footer>
+      <ul><a href="">Tab 1</a></ul>
+      <ul><a href="">Tab 2</a></ul>
+      <ul><a href="">Tab 3</a></ul>
+    </div>
+
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+        var $tweetStream = $('#tweets');
+        $tweetStream.html('');
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.text(String(tweet.created_at).slice(16,24) +' @' + tweet.user + '__' + tweet.message);
+          $tweet.appendTo($tweetStream);
           index -= 1;
         }
-
       });
 
     </script>

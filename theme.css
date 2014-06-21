@@ -1,0 +1,17 @@
+h1 {
+    color: blue;
+    padding: 0;
+    margin: 0;
+    background: #cccccc;
+}
+
+h2 {
+    padding: 0;
+    margin: 0;
+    background: #dddddd;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
