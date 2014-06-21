@@ -9,23 +9,21 @@
   <body>
     
     <div id=header>
-      <h1>Litter</h1>
-      <br/>
-      <h2>Live Twitter</h2>
+      <h1>LITTER</h1>
+      <h2>live twitter</h2>
     </div>
     
     <div id=nav>
-      <ul><a href="">Tab 1</a></ul>
-      <ul><a href="">Tab 2</a></ul>
-      <ul><a href="">Tab 3</a></ul>
+      <a href="">Tab 1</a>
+      <a href="">Tab 2</a>
     </div>
     
     <div id=tweets></div>
     
     <div id=footer>
-      <ul><a href="">Tab 1</a></ul>
-      <ul><a href="">Tab 2</a></ul>
-      <ul><a href="">Tab 3</a></ul>
+      <a href="">Contact</a>
+      <a href="">About</a>
+      <a href="">Help</a>
     </div>
 
     <script>
@@ -34,14 +32,31 @@
         var $tweetStream = $('#tweets');
         $tweetStream.html('');
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text(String(tweet.created_at).slice(16,24) +' @' + tweet.user + '__' + tweet.message);
-          $tweet.appendTo($tweetStream);
-          index -= 1;
-        }
+        var count = 0;
+
+        setInterval(function(){
+          var index = streams.home.length - 1;
+
+          while(count <= index){
+            var tweet = streams.home[count];
+            var $tweet = $('<div></div>');
+
+            var time = String(tweet.created_at).slice(16,24);
+            if (time.charAt(0)==='0'){
+              time = time.slice(1);
+              time +="am ";
+            } else if (time.charAt(0)==='2'){
+              time = time.replace(2,1);
+              time +="pm ";
+            } else {
+              time +="am ";
+            }
+
+            $tweet.text(time +' @' + tweet.user + '__' + tweet.message);
+            $tweet.prependTo($tweetStream);
+            count += 1;
+          }
+        },1000);
       });
 
     </script>
