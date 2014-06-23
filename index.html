@@ -16,17 +16,11 @@
       <h2 style='display:inline'>_live twitter</h2>
     </div>
     
-    <div id=nav>
-      <a href="">Tab 1</a> |
-      <a href="">Tab 2</a>
-    </div>
+    <div id=nav></div>
     
     <div id=tweets></div>
     
     <div id=footer>
-      <a href="">Contact</a> |
-      <a href="">About</a> |
-      <a href="">Help</a>
       <p id=company>Jon Sadka 2014</p>
     </div>
 
@@ -37,7 +31,6 @@
         $tweetStream.html('');
 
         var count = 0;
-
         setInterval(function(){
           var index = streams.home.length - 1;
 
@@ -56,11 +49,26 @@
               time +="am ";
             }
 
-            $tweet.text(time +' @' + tweet.user + '__' + tweet.message);
-            $tweet.prependTo($tweetStream);
+
+            $tweet.text(time +' @' + tweet.user + ' : ' + tweet.message);
+            $tweet.addClass('tweet');
+            $tweet.addClass(tweet.user);
+
+            var aSentence  = $tweet.html().split(' ');
+            function LinkWord(iIndex, sHref) {
+                aSentence[iIndex] = '<a href="' + sHref + '">' + aSentence[iIndex] + '</a>';
+                $tweet.html(aSentence.join(' '));
+            }
+            LinkWord(2, ''); //should take to username page
+
+
+            $tweet.hide().prependTo($tweetStream).fadeIn(700);
             count += 1;
           }
-        },1000);
+        },500);
+
+        $('#shawndrost').click(function(){alert('Yes!');});
+
       });
 
     </script>
