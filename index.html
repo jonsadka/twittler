@@ -8,20 +8,19 @@
   </head>
   <body>
     
-
-
     <div id=header>
       <div class="logo" style='display:inline'><a href=""><img src="logo.png" /></a></div>
       <h1 style='display:inline'>LITTER</h1>
       <h2 style='display:inline'>_live twitter</h2>
     </div>
     
-    <div id=nav></div>
+    <div id="nav"></div>
     
-    <div id=tweets></div>
+    <button>Button</button>
+    <div id="tweets"></div>
     
-    <div id=footer>
-      <p id=company>Jon Sadka 2014</p>
+    <div id="footer">
+      <p id="company">Jon Sadka 2014</p>
     </div>
 
     <script>
@@ -31,43 +30,54 @@
         $tweetStream.html('');
 
         var count = 0;
-        setInterval(function(){
-          var index = streams.home.length - 1;
+        
+        var POI = streams.home;
+
+        var displayMessages = setInterval(function(){
+          console.log(streams.users);
+          var index = POI.length - 1;
 
           while(count <= index){
-            var tweet = streams.home[count];
-            var $tweet = $('<div></div>');
+            var tweet = POI[count];
+            var $tweet = $('<div></div>');  
 
-            var time = String(tweet.created_at).slice(16,24);
-            if (time.charAt(0)==='0'){
-              time = time.slice(1);
-              time +="am ";
-            } else if (time.charAt(0)==='2'){
-              time = time.replace(2,1);
-              time +="pm ";
-            } else {
-              time +="am ";
-            }
-
-
-            $tweet.text(time +' @' + tweet.user + ' : ' + tweet.message);
-            $tweet.addClass('tweet');
+            $tweet.text(' @' + tweet.user + ' : ' + tweet.message);
+            
+            //var aSentence  = $tweet.html().split(' ');
+            //function LinkWord(iIndex, sHref) {
+            //    aSentence[iIndex] = '<a href="' + sHref + '">' + aSentence[iIndex] + '</a>';
+            //    $tweet.html(aSentence.join(' '));
+            //}
+            //LinkWord(1, ''); //should take to username page
+              
             $tweet.addClass(tweet.user);
-
-            var aSentence  = $tweet.html().split(' ');
-            function LinkWord(iIndex, sHref) {
-                aSentence[iIndex] = '<a href="' + sHref + '">' + aSentence[iIndex] + '</a>';
-                $tweet.html(aSentence.join(' '));
-            }
-            LinkWord(2, ''); //should take to username page
-
-
+            //$tweet.attr('id', 'messages');
             $tweet.hide().prependTo($tweetStream).fadeIn(700);
+    
             count += 1;
           }
         },500);
 
-        $('#shawndrost').click(function(){alert('Yes!');});
+
+        $(document).on('click', '.mracus', function(){
+          var el = document.getElementById('tweets');
+          while ( el.hasChildNodes() ){
+            el.removeChild( el.lastChild );
+          } 
+
+          var person = streams.users.mracus;
+
+          for (var i=0; i<person.length; i++){
+            var $tweet = $('<div></div>');
+            var tweet = person[i];
+            $tweet.text(' @' + tweet.user + ' : ' + tweet.message);
+            $tweet.prependTo($tweetStream)
+          }
+
+          POI = streams.users.mracus;
+          displayMessages();
+        });
+
 
       });
 
