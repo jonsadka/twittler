@@ -10,8 +10,8 @@
     
     <div id=header>
       <div class="logo" style='display:inline'><a href=""><img src="logo.png" /></a></div>
-      <h1 style='display:inline'>LITTER</h1>
-      <h2 style='display:inline'>_live twitter</h2>
+      <h1>LITTER</h1>
+      <h2>_live twitter</h2>
     </div>
     
     <div id="nav"></div>
@@ -31,41 +31,44 @@
 
         var count = 0;
         
-        var POI = streams.home;
-
-        var displayMessages = setInterval(function(){
-          console.log(streams.users);
-          var index = POI.length - 1;
+        var updating = function(person){
+          //console.log(streams.users);
+          var index = person.length - 1;
 
           while(count <= index){
-            var tweet = POI[count];
+            var tweet = person[count];
             var $tweet = $('<div></div>');  
 
             $tweet.text(' @' + tweet.user + ' : ' + tweet.message);
             
-            //var aSentence  = $tweet.html().split(' ');
-            //function LinkWord(iIndex, sHref) {
-            //    aSentence[iIndex] = '<a href="' + sHref + '">' + aSentence[iIndex] + '</a>';
-            //    $tweet.html(aSentence.join(' '));
-            //}
-            //LinkWord(1, ''); //should take to username page
+            var aSentence  = $tweet.html().split(' ');
+            function LinkWord(iIndex, sHref) {
+                aSentence[iIndex] = '<span class="' + sHref + '">' + aSentence[iIndex] + '</span>';
+                $tweet.html(aSentence.join(' '));
+            }
+            LinkWord(1, tweet.user); //should take to username page
               
-            $tweet.addClass(tweet.user);
+            //$tweet.addClass(tweet.user);
             //$tweet.attr('id', 'messages');
             $tweet.hide().prependTo($tweetStream).fadeIn(700);
     
             count += 1;
           }
-        },500);
+        }
 
+        var everyone = setInterval(function(){updating(streams.home)},500);
 
-        $(document).on('click', '.mracus', function(){
+        $(document).on('click', '#tweets', function(){
+          clearInterval(everyone);
+          console.log($(this).children().className);
+          count = streams.users.mracus.length;
+
           var el = document.getElementById('tweets');
           while ( el.hasChildNodes() ){
             el.removeChild( el.lastChild );
           } 
 
-          var person = streams.users.mracus;
+          var person = streams.users.mracus;  //possibly change to this?
 
           for (var i=0; i<person.length; i++){
             var $tweet = $('<div></div>');
@@ -74,8 +77,7 @@
             $tweet.prependTo($tweetStream)
           }
 
-          POI = streams.users.mracus;
-          displayMessages();
+          everyone = setInterval(function(){updating(streams.users.mracus)},500);
         });
 
 
