@@ -10,14 +10,13 @@
   <body>
     
     <div id=header>
-      <div class="logo" style='display:inline'><a href=""><img src="img/logo.png" /></a></div>
+      <div class="logo"><img src="img/logo.png" /></div>
       <h1>LITTER</h1>
-      <h2>_live twitter</h2>
     </div>
     
-    <div id="nav"></div>
+    <div id="nav"><button>Show All Users</button></div>
     
-    <button>Show All Users</button>
+    
     <div id="body"></div>
     
     <div id="footer">
@@ -42,19 +41,22 @@
         var decMessage = function(dataset, i){
             var tweet = dataset[i];
             var $tweet = $('<div id="tweets"></div>'); 
-            var $tme = $('<time class="timeago"></time>'); //time
-            var $msg = $('<span class="message"></span>'); //message
-            var $usr = $('<span class="user"></span>'); //user
+            var $tme = $('<time id="left" class="timeago"></time>');
+            var $msg = $('<span id="right" class="message"></span>');
+            var $usr = $('<span id="center" class="user"></span>');
+            var $lne = $('<div id="line"></div>')
             
             $tme.text($.timeago(formatTime(tweet.created_at)));
             $tme.attr("datetime",formatTime(tweet.created_at));
             $msg.text(tweet.message);
-            $usr.text("@" + tweet.user);
+            $usr.text(tweet.user);
             $usr.addClass(tweet.user);
             
             $tme.appendTo($tweet);
             $usr.appendTo($tweet);
             $msg.appendTo($tweet);
+            $lne.appendTo($tweet);
+
 
             return $tweet;
         }
@@ -69,7 +71,7 @@
             count += 1;
           }
         }
-        
+
         var everyone = setInterval(function(){updating(streams.home)},500);
         $(document).on('click', '.user', function(){
           clearInterval(everyone);
