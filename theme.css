@@ -5,6 +5,7 @@ body {
 body, h1, h2, ul, p, a {
     padding: 0;
     margin: 0;
+    display: inline;
 }
 
 a {
@@ -25,25 +26,21 @@ a {
 
 #nav {}
 
-#tweets {
+#body {
     padding-left: 25px;
     padding-top: 15px;
     padding-bottom: 15px;
     margin: 0;
     background: #F2F2F2;
     background-color: #fff; 
-    background-image: 
-    linear-gradient(#eee .1em, transparent .1em);
-    background-size: 100% 1.2em;
-}
-
-.tweet {
-    color: #666666;
+    max-height: 600px;
+    overflow: auto;
 }
 
 #footer {
     height: 30px;
     bottom: 0;
+
 }
 
 #company {

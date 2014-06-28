@@ -2,22 +2,23 @@
 <html>
   <head>
     <title>Litter</title>
-    <script src="jquery.js"></script>
-    <script src="data_generator.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/data_generator.js"></script>
+    <script src="js/jquery.timeago.js"></script>
     <link rel="stylesheet" type="text/css" href="theme.css">
   </head>
   <body>
     
     <div id=header>
-      <div class="logo" style='display:inline'><a href=""><img src="logo.png" /></a></div>
+      <div class="logo" style='display:inline'><a href=""><img src="img/logo.png" /></a></div>
       <h1>LITTER</h1>
       <h2>_live twitter</h2>
     </div>
     
     <div id="nav"></div>
     
-    <button>Button</button>
-    <div id="tweets"></div>
+    <button>Show All Users</button>
+    <div id="body"></div>
     
     <div id="footer">
       <p id="company">Jon Sadka 2014</p>
@@ -26,60 +27,112 @@
     <script>
 
       $(document).ready(function(){
-        var $tweetStream = $('#tweets');
+        var $tweetStream = $('#body');
         $tweetStream.html('');
 
         var count = 0;
-        
-        var updating = function(person){
-          //console.log(streams.users);
-          var index = person.length - 1;
 
+        var formatTime = function(oldTime){
+          return  String(oldTime).slice(11,15) + "-" + 
+                  String(oldTime).slice(4,7) + "-" +
+                  String(oldTime).slice(8,10) + "T" + 
+                  String(oldTime).slice(16,24);
+        }
+
+        var updating = function(person){
+          $("time.timeago").timeago();
+          console.log("Updated!");
+          var index = person.length - 1;
           while(count <= index){
             var tweet = person[count];
-            var $tweet = $('<div></div>');  
-
-            $tweet.text(' @' + tweet.user + ' : ' + tweet.message);
+            var $tweet = $('<div id="tweets"></div>'); 
+            var $tme = $('<time class="timeago"></time>'); //time
+            var $msg = $('<span class="message"></span>'); //message
+            var $usr = $('<span class="user"></span>'); //user
             
-            var aSentence  = $tweet.html().split(' ');
-            function LinkWord(iIndex, sHref) {
-                aSentence[iIndex] = '<span class="' + sHref + '">' + aSentence[iIndex] + '</span>';
-                $tweet.html(aSentence.join(' '));
-            }
-            LinkWord(1, tweet.user); //should take to username page
-              
-            //$tweet.addClass(tweet.user);
-            //$tweet.attr('id', 'messages');
+            $tme.text($.timeago(formatTime(tweet.created_at)));
+            $tme.attr("datetime",formatTime(tweet.created_at));
+            $msg.text(tweet.message);
+            $usr.text("@" + tweet.user);
+            $usr.addClass(tweet.user);
+
             $tweet.hide().prependTo($tweetStream).fadeIn(700);
-    
+            
+            $tme.appendTo($tweet);
+            $usr.appendTo($tweet);
+            $msg.appendTo($tweet);
+            
             count += 1;
           }
         }
-
         var everyone = setInterval(function(){updating(streams.home)},500);
 
-        $(document).on('click', '#tweets', function(){
+        $(document).on('click', '.user', function(){
           clearInterval(everyone);
-          console.log($(this).children().className);
-          count = streams.users.mracus.length;
+          var person = streams.users[$(this).attr("class").slice(5)];
+          count = person.length;
 
-          var el = document.getElementById('tweets');
+          var el = document.getElementById("body");
           while ( el.hasChildNodes() ){
             el.removeChild( el.lastChild );
           } 
 
-          var person = streams.users.mracus;  //possibly change to this?
-
           for (var i=0; i<person.length; i++){
-            var $tweet = $('<div></div>');
             var tweet = person[i];
-            $tweet.text(' @' + tweet.user + ' : ' + tweet.message);
-            $tweet.prependTo($tweetStream)
+            var $tweet = $('<div id="tweets"></div>'); 
+            var $tme = $('<time class="timeago"></time>'); //time
+            var $msg = $('<span class="message"></span>'); //message
+            var $usr = $('<span class="user"></span>'); //user
+            
+            $tme.text($.timeago(formatTime(tweet.created_at)));
+            $tme.attr("datetime",formatTime(tweet.created_at));
+            $msg.text(tweet.message);
+            $usr.text("@" + tweet.user);
+            $usr.addClass(tweet.user);
+
+            $tweet.prependTo($tweetStream);
+            
+            $tme.appendTo($tweet);
+            $usr.appendTo($tweet);
+            $msg.appendTo($tweet);
           }
 
-          everyone = setInterval(function(){updating(streams.users.mracus)},500);
+          everyone = setInterval(function(){updating(person)},1000);
         });
 
+        $(document).on('click', 'button', function(){
+          clearInterval(everyone);
+          var person = streams.home;
+          
+          count = person.length;
+
+          var el = document.getElementById("body");
+          while ( el.hasChildNodes() ){
+            el.removeChild( el.lastChild );
+          } 
+
+          for (var i=0; i<person.length; i++){
+            var tweet = person[i];
+            var $tweet = $('<div id="tweets"></div>'); 
+            var $tme = $('<time class="timeago"></time>'); //time
+            var $msg = $('<span class="message"></span>'); //message
+            var $usr = $('<span class="user"></span>'); //user
+            
+            $tme.text($.timeago(formatTime(tweet.created_at)));
+            $tme.attr("datetime",formatTime(tweet.created_at));
+            $msg.text(tweet.message);
+            $usr.text("@" + tweet.user);
+            $usr.addClass(tweet.user);
+
+            $tweet.prependTo($tweetStream);
+            
+            $tme.appendTo($tweet);
+            $usr.appendTo($tweet);
+            $msg.appendTo($tweet);
+          }
+
+          everyone = setInterval(function(){updating(person)},500);
+        });
 
       });
 
