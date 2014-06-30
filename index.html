@@ -62,12 +62,12 @@
           var index = person.length - 1;
           while(count <= index){
             var $tweet = decMessage(person, count);
-            $tweet.hide().prependTo($tweetStream).fadeIn(700);
+            $tweet.hide().prependTo($tweetStream).fadeIn(1000);
             count += 1;
           }
         }
 
-        var everyone = setInterval(function(){updating(streams.home)},500);
+        var everyone = setInterval(function(){updating(streams.home)},1000);
         
         $(document).on('click', '.user', function(){
           clearInterval(everyone);
