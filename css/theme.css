@@ -1,6 +1,14 @@
+html {
+    background-color:#C0DEED;
+    background-image: linear-gradient(90deg, rgba(255,255,255,.07) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(255,255,255,.13) 50%, transparent 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.17) 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.19) 50%);
+    background-size: 13px, 29px, 37px, 53px;
+}
+
 body {
-    font-family: arial;
-    background-color: #333333;
+    font-family: helvetica;
 }
 
 body, h1, h2, ul, p, a {
@@ -13,36 +21,39 @@ span, time {
     display: inline-block;
 }
 
-.user {
-    cursor: pointer;
-}
-
 #header, #footer {
-    background: #55ACEE;
-    opacity: 0.85;
+    background: rgba(85,172,238,.50);
 }
 
 #header {	
     box-shadow: 3px black;
     padding-left: 25px;
-    padding-top: 25px;
+    padding-top: 15px;
     padding-bottom: 5px;
-    color: #353535;
 }
 
-#nav {
-    background-color: white;
-    opacity: .85;
+img {
+    padding-left: 3%;
 }
+
+h1 {
+    color: #66757F;
+}
+
 button {
     border-style: none;
-    width: 100%;
     cursor: pointer;
-    background-color: transparent;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 14px;
+    margin: 0 auto;
+    color: #66757F;
+    position: absolute;
+    right: 5%;
+    top: 55px;
 }
 
 #body {
-    padding-right:25px;
     padding-top: 10px;
     padding-bottom: 15px;
     margin: 0;
@@ -50,47 +61,58 @@ button {
 }
 
 #tweets {
-    width: 100%;
+    width: 90%;
+    margin: auto;
+    border-radius: 8px;
+    padding-bottom: 10px;
 }
-#left {
-    color: #333333;
-    background-color: #222222;
-    text-align: right;
+
+.user, .timeago, .message{
     vertical-align: bottom;
+    background-color: #FFFFFF;
+    box-shadow: 2px 1px 1px #66757F;
+}
+
+.user {
+    font-size: 22px;
+    color: #66757F;
+    width: 23%;
+    cursor: pointer;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding-top: 5px;
+    padding-left: 1%;
+}
+.timeago {
     font-size: 12px;
-    width: 7%;
-    height: 30px;
+    text-align: left;
+    color: #CCD6DD;
+    width: 13%;
+    padding-top: 16px;
 }
-#center {
-    width: 20%;
-    font-size: 30px;
-}
-#right {
-    color: ;
-    background-color: ;
+.message {
+    font-size: 16px;
     text-align: right;
-    vertical-align: bottom;
-    width: 73%;
-}
-#line {
-    height: 1px;
-    background-color: #000000;
-    opacity: 50;
+    width: 62%;
+    color: #292f33;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-top: 12px;
+    padding-right: 1%;
 }
 
 #footer {
     clear: both;
     position: relative;
     z-index: 10;
-    height: 3em;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     text-align: right;
     width: 100%;
 }
 
 #company {
-    color: #FFFFFF;
+    color: #66757F;
     padding-top: 10px;
-    padding-left: 80px;
+    padding-right: 5%;
 }
